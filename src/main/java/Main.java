@@ -16,7 +16,7 @@ public class Main
         for (CodeFile src: srcCode)
             if (src.isMain())
             {
-                Functions.run(src.getMainFun());
+                Functions.run(src.getMainFun(), null, srcCode);
                 System.exit(0);
             }
     }

@@ -76,9 +76,9 @@ public class ScanProject
 
                 codeFile.setMainFun(tokens);
             }
-            else if (tokenLines.get(loc).get(0).equals("fun"))
+            else if (tokenLines.size() >= 4 && tokenLines.get(loc).get(0).equals("(") && tokenLines.get(loc).get(1).equals("fun") && tokenLines.get(loc).get(tokenLines.get(loc).size() - 1).equals(")"))
             {
-                String name = tokenLines.get(loc).get(1);
+                String name = tokenLines.get(loc).get(2);
 
                 ArrayList<ArrayList<String>> tokens = new ArrayList<>();
                 while (loc < tokenLines.size() && !tokenLines.get(loc).get(0).equals("done"))

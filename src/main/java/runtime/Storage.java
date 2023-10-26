@@ -131,6 +131,6 @@ public class Storage
 
     public enum Access
     {
-        PUBLIC, PROTECTED, PRIVATE
+        PUBLIC, PROTECTED, PRIVATE, BLOCK
     }
 }
