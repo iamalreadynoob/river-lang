@@ -66,15 +66,21 @@ public class Functions
 
                 loc++;
             }
+            else if (loc == 0) loc++;
 
             //conditional statements
-            if (fun.get(loc).get(0).equals("situ"))
+            else if (fun.get(loc).get(0).equals("situ"))
             {
 
             }
 
             //loops
             else if (fun.get(loc).get(0).equals("loop"))
+            {
+
+            }
+
+            else if (fun.get(loc).contains("="))
             {
 
             }
