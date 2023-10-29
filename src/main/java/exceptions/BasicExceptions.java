@@ -16,7 +16,10 @@ public class BasicExceptions
             case UNEXPECTED_ARGUMENTS_PASSED: return "UNEXPECTED ARGUMENTS PASSED: There are more arguments than expected.";
             case ARGUMENTS_MISSING: return "ARGUMENTS MISSING: There are less arguments than expected";
             case INVALID_DATATYPE: return "INVALID DATATYPE: The given datatype does not exist.";
-            case DUPLICATE_ERROR: return "DUPLICATE ERROR: The element duplicated";
+            case DUPLICATE_ERROR: return "DUPLICATE ERROR: The element duplicated.";
+            case INVALID_REFERENCE_POINT: return "INVALID REFERENCE POINT: The reference point must be equal or between 0 and 1.";
+            case INVALID_SIMPLE_TRUTH_VALUE: return "INVALID SIMPLE TRUTH VALUE: The value must be 'true' or 'false'.";
+            case TYPE_CAST_ERROR: return "TYPE CAST ERROR: The provided text/char cannot be converted.";
         }
 
         return null;
@@ -26,7 +29,8 @@ public class BasicExceptions
     public enum Exceptions
     {
         RUNTIME_NON_EXIST, ALREADY_ASSIGNED, UNASSIGNED_VARIABLE, INVALID_MACRO_COMMAND, MACRO_SYNTAX_ERROR, FILE_NON_EXIST,
-        UNEXPECTED_ARGUMENTS_PASSED, ARGUMENTS_MISSING, INVALID_DATATYPE, DUPLICATE_ERROR
+        UNEXPECTED_ARGUMENTS_PASSED, ARGUMENTS_MISSING, INVALID_DATATYPE, DUPLICATE_ERROR, INVALID_REFERENCE_POINT,
+        INVALID_SIMPLE_TRUTH_VALUE, TYPE_CAST_ERROR
     }
 
 }

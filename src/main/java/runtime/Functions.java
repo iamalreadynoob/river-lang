@@ -50,7 +50,7 @@ public class Functions
                     if (passedArgs.size() == names.size())
                     {
                         for (int i = 0; i < names.size(); i++)
-                            block.addVariable(names.get(i), types.get(i), Storage.Access.BLOCK, passedArgs.get(i));
+                            block.addVariable(names.get(i), types.get(i), Storage.Access.BLOCK, passedArgs.get(i).toString());
                     }
                     else if (passedArgs.size() > names.size())
                     {

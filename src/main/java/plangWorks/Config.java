@@ -49,6 +49,8 @@ public class Config
         commands.add("public");
         commands.add("protected");
         commands.add("private");
+        commands.add("refp");
+        commands.add("refpBeh");
 
         return commands;
     }

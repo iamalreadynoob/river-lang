@@ -8,19 +8,24 @@ import java.util.Map;
 public class Storage
 {
 
-    private Map<String, Object> storage;
+    private Map<String, String> storage;
     private Map<String, String> types;
     private Map<String, Access> accessTypes;
+    private double referencePoint;
+    private boolean referencePointBehavior;
 
     public Storage()
     {
         storage = new HashMap<>();
         types = new HashMap<>();
         accessTypes = new HashMap<>();
+
+        referencePoint = 0.5;
+        referencePointBehavior = true;
     }
 
     //CREATE
-    public void addVariable(String name, String type, Access access, Object object)
+    public void addVariable(String name, String type, Access access, String object)
     {
         if (!storage.containsKey(name))
         {
@@ -42,7 +47,7 @@ public class Storage
 
 
     //READ
-    public Object getObject(String name)
+    public String getObject(String name)
     {
         if (storage.containsKey(name)) return storage.get(name);
         else
@@ -75,9 +80,11 @@ public class Storage
         }
     }
 
+    public double getReferencePoint() {return referencePoint;}
+    public boolean getReferencePointBehavior() {return referencePointBehavior;}
 
     //UPDATE
-    public void setValue(String name, Object value)
+    public void setValue(String name, String value)
     {
         if (storage.containsKey(name)) storage.put(name, value);
         else
@@ -112,6 +119,17 @@ public class Storage
         }
     }
 
+    public void setReferencePoint(double referencePoint)
+    {
+        if (referencePoint >= 0 && referencePoint <= 1) this.referencePoint = referencePoint;
+        else
+        {
+            System.err.println(BasicExceptions.getException(BasicExceptions.Exceptions.INVALID_REFERENCE_POINT));
+            System.exit(1);
+        }
+    }
+
+    public void setReferencePointBehavior(boolean referencePointBehavior) {this.referencePointBehavior = referencePointBehavior;}
 
     //DELETE
     public void killVariable(String name)

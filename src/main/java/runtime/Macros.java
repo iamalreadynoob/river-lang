@@ -2,6 +2,7 @@ package runtime;
 
 import exceptions.BasicExceptions;
 import plangWorks.Config;
+import recognizing.TypeCheck;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,6 +57,28 @@ public class Macros
                     System.out.println(BasicExceptions.getException(BasicExceptions.Exceptions.MACRO_SYNTAX_ERROR));
                     System.exit(1);
                     return null;
+                }
+            }
+            else if (tokens.get(1).equals("refp"))
+            {
+                if (TypeCheck.isFnum(tokens.get(2)))
+                    return new Object[] {tokens.get(2)};
+
+                else
+                {
+                    System.err.println(BasicExceptions.getException(BasicExceptions.Exceptions.INVALID_REFERENCE_POINT));
+                    System.exit(1);
+                }
+            }
+            else if (tokens.get(1).equals("refpBeh"))
+            {
+                if (TypeCheck.isBool(tokens.get(2)))
+                    return new Object[] {tokens.get(2)};
+
+                else
+                {
+                    System.err.println(BasicExceptions.getException(BasicExceptions.Exceptions.INVALID_SIMPLE_TRUTH_VALUE));
+                    System.exit(1);
                 }
             }
 

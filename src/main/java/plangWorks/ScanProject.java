@@ -59,7 +59,17 @@ public class ScanProject
                 else if (tokenLines.get(loc).get(1).equals("public") || tokenLines.get(loc).get(1).equals("protected") || tokenLines.get(loc).get(1).equals("private"))
                 {
                     Object[] objects = Macros.run(tokenLines.get(loc));
-                    codeFile.getStorage().addVariable(objects[2].toString(), objects[1].toString(), (Storage.Access) objects[0], objects[3]);
+                    codeFile.getStorage().addVariable(objects[2].toString(), objects[1].toString(), (Storage.Access) objects[0], objects[3].toString());
+                }
+                else if (tokenLines.get(loc).get(1).equals("refp"))
+                {
+                    Object[] objects = Macros.run(tokenLines.get(loc));
+                    codeFile.getStorage().setReferencePoint(Double.parseDouble(objects[0].toString()));
+                }
+                else if (tokenLines.get(loc).get(1).equals("refpBeh"))
+                {
+                    Object[] objects = Macros.run(tokenLines.get(loc));
+                    codeFile.getStorage().setReferencePointBehavior(Boolean.parseBoolean(objects[0].toString()));
                 }
 
                 loc++;
