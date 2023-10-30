@@ -74,7 +74,11 @@ public class TypeCheck
     {
         String type = null;
 
-        boolean flag = true;
+        if (isNum(value)) type = "num";
+        else if (isLnum(value)) type = "lnum";
+        else if (isByte(value)) type = "byte";
+        else if (isFnum(value)) type = "fnum";
+        else if (isTruth(value)) type = "truth";
 
         return type;
     }

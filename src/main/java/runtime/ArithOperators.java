@@ -13,7 +13,14 @@ public class ArithOperators
     public static String calculate(ArrayList<String> pieces, Map<String, String> variables, Map<String, String> varTypes, String resultType)
     {
         String result = null;
+        ArrayList<String> simplified = simplify(pieces, resultType, variables, varTypes);
+        ArrayList<String> cleared = handleBrackets(simplified);
+        result = exec(cleared);
+        return result;
+    }
 
+    private static ArrayList<String> simplify(ArrayList<String> pieces, String resultType, Map<String, String> variables, Map<String, String> varTypes)
+    {
         ArrayList<String> simplified = new ArrayList<>();
 
         int loc = 0;
@@ -40,7 +47,66 @@ public class ArithOperators
             else
             {
                 String type = TypeCheck.getType(pieces.get(loc));
+                if (type != null && !type.equals("truth"))
+                {
+                    TypeCast cast = new TypeCast();
+                    simplified.add(cast.convert(type, resultType, pieces.get(loc)));
+                }
             }
+        }
+
+        return simplified;
+    }
+
+    private static ArrayList<String> handleBrackets(ArrayList<String> pieces)
+    {
+        String result = null;
+
+        int openBrackets = 0;
+        int closeBrackets = 0;
+
+        int loc = 0;
+        while (loc < pieces.size())
+        {
+            if (pieces.get(loc).equals("(")) openBrackets = loc;
+            else if (pieces.get(loc).equals(")") && openBrackets < loc)
+            {
+                closeBrackets = loc;
+
+                if (closeBrackets - openBrackets > 1)
+                {
+                    ArrayList<String> subProcess = new ArrayList<>();
+
+                    for (int i = openBrackets+1; i < closeBrackets; i++)
+                        subProcess.add(pieces.get(i));
+
+                    String subResult = exec(subProcess);
+
+                    ArrayList<String> temp = new ArrayList<>();
+                    for (int i = 0; i < openBrackets; i++) temp.add(pieces.get(i));
+                    temp.add(subResult);
+                    for (int i = closeBrackets+1; i < pieces.size(); i++) temp.add(pieces.get(i));
+
+                    pieces = temp;
+                    loc = openBrackets;
+                }
+            }
+
+            loc++;
+        }
+
+
+        return pieces;
+    }
+
+    public static String exec(ArrayList<String> pieces)
+    {
+        String result = null;
+
+        int loc = 0;
+        while (loc < pieces.size())
+        {
+
         }
 
         return result;
