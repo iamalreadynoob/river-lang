@@ -1,6 +1,7 @@
 package runtime;
 
 import exceptions.BasicExceptions;
+import recognizing.TypeArith;
 import recognizing.TypeCast;
 import recognizing.TypeCheck;
 
@@ -14,8 +15,8 @@ public class ArithOperators
     {
         String result = null;
         ArrayList<String> simplified = simplify(pieces, resultType, variables, varTypes);
-        ArrayList<String> cleared = handleBrackets(simplified);
-        result = exec(cleared);
+        ArrayList<String> cleared = handleBrackets(simplified, resultType);
+        result = exec(cleared, resultType);
         return result;
     }
 
@@ -58,7 +59,7 @@ public class ArithOperators
         return simplified;
     }
 
-    private static ArrayList<String> handleBrackets(ArrayList<String> pieces)
+    private static ArrayList<String> handleBrackets(ArrayList<String> pieces, String type)
     {
         String result = null;
 
@@ -80,7 +81,7 @@ public class ArithOperators
                     for (int i = openBrackets+1; i < closeBrackets; i++)
                         subProcess.add(pieces.get(i));
 
-                    String subResult = exec(subProcess);
+                    String subResult = exec(subProcess, type);
 
                     ArrayList<String> temp = new ArrayList<>();
                     for (int i = 0; i < openBrackets; i++) temp.add(pieces.get(i));
@@ -99,15 +100,57 @@ public class ArithOperators
         return pieces;
     }
 
-    public static String exec(ArrayList<String> pieces)
+    public static String exec(ArrayList<String> pieces, String type)
     {
         String result = null;
 
         int loc = 0;
+
+        boolean flag = true;
+
+        while (!pieces.isEmpty() && flag)
+        {
+            flag = false;
+
+            if (pieces.get(0).equals("*") || pieces.get(0).equals("/") || pieces.get(0).equals("^"))
+            {
+                pieces.remove(0);
+                flag = true;
+            }
+
+            if (pieces.get(pieces.size() - 1).equals("*") || pieces.get(pieces.size() - 1).equals("/") || pieces.get(pieces.size() - 1).equals("^"))
+            {
+                pieces.remove(pieces.size()-1);
+                flag = true;
+            }
+        }
+
+
+        TypeArith arith = new TypeArith(type);
+
+        loc = 0;
+
         while (loc < pieces.size())
         {
-
+            if (pieces.get(loc).equals("*"))
+            {
+                String subResult = arith.calculate(pieces.get(loc-1), pieces.get(loc+1), '*');
+                pieces = arith.reArrangeArr(pieces, subResult, loc-1);
+            }
+            else if (pieces.get(loc).equals("/"))
+            {
+                String subResult = arith.calculate(pieces.get(loc-1), pieces.get(loc+1), '/');
+                pieces = arith.reArrangeArr(pieces, subResult, loc-1);
+            }
+            else if (pieces.get(loc).equals("^"))
+            {
+                String subResult = arith.calculate(pieces.get(loc-1), pieces.get(loc+1), '^');
+                pieces = arith.reArrangeArr(pieces, subResult, loc-1);
+            }
+            else loc++;
         }
+
+        //TODO: ADD & SUBTRACT
 
         return result;
     }
