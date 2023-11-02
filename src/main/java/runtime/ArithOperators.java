@@ -151,6 +151,39 @@ public class ArithOperators
         }
 
         //TODO: ADD & SUBTRACT
+        //remove last symbols
+        //calculate
+        //if index 0 is a symbol make it
+
+        while (!pieces.isEmpty())
+        {
+            if (pieces.get(pieces.size() - 1).equals("+") || pieces.get(pieces.size() - 1).equals("-"))
+                pieces.remove(pieces.size()-1);
+            else break;
+        }
+
+        loc = 1;
+
+        while (loc < pieces.size())
+        {
+            if (pieces.get(loc).equals("+"))
+            {
+                String subResult = arith.calculate(pieces.get(loc-1), pieces.get(loc+1), '+');
+                pieces = arith.reArrangeArr(pieces, subResult, loc-1);
+            }
+            else if (pieces.get(loc).equals("-"))
+            {
+                String subResult = arith.calculate(pieces.get(loc-1), pieces.get(loc+1), '-');
+                pieces = arith.reArrangeArr(pieces, subResult, loc-1);
+            }
+            else loc++;
+        }
+
+        if (pieces.size() == 2 && pieces.get(0).equals("-"))
+            result = "-" + pieces.get(1);
+        else if (pieces.size() == 2 && pieces.get(0).equals("+"))
+            result = pieces.get(1);
+        else if (pieces.size() == 1) result = pieces.get(0);
 
         return result;
     }
